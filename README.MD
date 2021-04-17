@@ -24,8 +24,8 @@
 [PurrBot - API](https://docs.purrbot.site)
 
 ## Usage
-This wrapper provides various ways to interact with the image api.
-A full description of what is possible can be viewed through the javadocs.
+This wrapper provides various ways to interact with the image api.  
+A full description of what is possible can be accessed through the javadocs.  
 ### Raw
 #### Prepare the wrapper
 Create a new instance of the class to prepare the wrapper. This instance should be used for all requests (but you can create multiple instances if that is needed somehow)
@@ -33,7 +33,7 @@ Create a new instance of the class to prepare the wrapper. This instance should 
  Purrito purrito = new Purrito(); 
 ```
 #### Build a request
-A request can be build just like that
+A request can be created like the example below
 ```java
 Request.Builder newRequestBuilder = purrito.newRequest();
 Request request = newRequestBuilder
@@ -41,9 +41,9 @@ Request request = newRequestBuilder
                     .getReturnType(Endpoint.ReturnType.JSON_w_GIF)
                     .prepare();
 ```
-The example below shows a basic example on how to interact with the api: You decide what to do with the responses
+A basic example on how to interact with the api is shown below: You decide what to do with the responses
 #### Sync
-You can get responses in a blocking way
+You can get the response in a blocking way
 ```java
 IResponse iResponse = request.execute();
 if(iResponse instanceof IResponse.Success){
@@ -63,22 +63,25 @@ request.execute(success -> {
 ```
 
 ### Simple
-The wrapper also provides tool to do what you want to do in a more easy way. Keep in mind that not all features are available that way.  
+The wrapper also provides tools to do what you want to do in a more easy way. Keep in mind that not all features are available that way, and you loose a lot of customisability.  
 
 #### Prepare the wrapper
-We need to prepare the wrapper aswell but instead of using the mentioned way above, we use:
+We need to prepare the wrapper aswell but instead of using the way mentioned above we use:
 ```java
 Purritowo purritowo = new Purritowo();
 ```
 
 #### Sync
-You can get responses in a blocking way - for example if you want to get the url of a random dance image
+You still have the possibility to get the results in a blocking way
 ```
 String url = purritowo.doSync().getImageURL(ImageType.SFW.DANCE, ContentType.GIF);
+if(url == null){
+  // some error occured - view logs
+}
 ```
 
 #### Async
-This also works in a non-blocking way
+... or in a non-blocking way
 ```
-purritowo.doAsync().getImageURL(ImageType.SFW.DANCE, ContentType.GIF, (url) -> { // do something with the url });
+purritowo.doAsync().getImageURL(ImageType.SFW.DANCE, ContentType.GIF, (url) -> { // do something with the url }, (error) -> { // handle errors });
 ```

@@ -16,8 +16,8 @@
     - Async execution
 
 ## Download the latest version here
-[View all]()  
-[Direct download]()  
+[View all](https://ci.netbeacon.de/viewType.html?buildTypeId=Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper&tab=buildTypeStatusDiv)  
+[Direct download](https://ci.netbeacon.de/repository/download/Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper/latest.lastSuccessful/PurrBot-API-Wrapper_latest.jar)  
 
 ## Links
 [PurrBot](https://purrbot.site)  

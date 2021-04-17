@@ -61,11 +61,7 @@ request.execute(success -> {
         // handle error
 });
 ```
-#### Success
-Successfully responses allow you to do various processing
-```java
 
-```
 ### Simple
 The wrapper also provides tool to do what you want to do in a more easy way. Keep in mind that not all features are available that way.  
 

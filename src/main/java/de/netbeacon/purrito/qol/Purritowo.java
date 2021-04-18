@@ -214,39 +214,18 @@ public class Purritowo {
          * @param onError to be called if anything goes wrong
          */
         public void getImageInputStream(ImageType.IT imageType, ContentType contentType, Consumer<InputStream> inputStreamOnSuccess, Consumer<IResponse.Error> onError){
-            try{
-                purrito.newRequest()
-                        .useEndpoint(imageType.getEndpoint())
-                        .getReturnType(contentType.getReturnTypes())
-                        .prepare().execute((s) -> {
-                            try{
-                                JSONObject payload = s.getAsJSONPayload();
-                                if(payload.getBoolean("error")){
-                                    if(onError != null){
-                                        logger.debug("Something went wrong getting the image input stream: "+payload.get("message"));
-                                        onError.accept(new ResponseError(payload.getString("message")));
-                                    }else{
-                                        logger.error("Something went wrong getting the image input stream: "+payload.get("message"));
-                                    }
-                                }
-                                inputStreamOnSuccess.accept(new URL(payload.getString("link")).openStream());
-                            }catch (Exception e){
-                                if(onError != null){
-                                    logger.debug("Something went wrong getting the image input stream:", e);
-                                    onError.accept(new ResponseError(e));
-                                }else{
-                                    logger.error("Something went wrong getting the image input stream:", e);
-                                }
-                            }
-                }, onError);
-            }catch (Exception e){
-                if(onError != null){
-                    logger.debug("Something went wrong getting the image input stream:", e);
-                    onError.accept(new ResponseError(e));
-                }else{
-                    logger.error("Something went wrong getting the image input stream:", e);
+            getImageURL(imageType, contentType, (url) -> {
+                try{
+                    inputStreamOnSuccess.accept(new URL(url).openStream());
+                }catch (Exception e){
+                    if(onError != null){
+                        logger.debug("Something went wrong getting the image input stream:", e);
+                        onError.accept(new ResponseError(e));
+                    }else{
+                        logger.error("Something went wrong getting the image input stream:", e);
+                    }
                 }
-            }
+            }, onError);
         }
 
     }

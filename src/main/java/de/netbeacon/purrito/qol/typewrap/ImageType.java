@@ -89,7 +89,7 @@ public class ImageType {
 
         @Override
         public Endpoint getEndpoint() {
-            return null;
+            return endpoint;
         }
     }
 

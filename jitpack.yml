@@ -1,0 +1,4 @@
+jdk:
+  - openjdk13
+install:
+  - ./gradlew shadowJar

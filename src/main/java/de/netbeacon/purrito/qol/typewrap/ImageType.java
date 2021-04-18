@@ -21,12 +21,18 @@ import de.netbeacon.purrito.core.request.Endpoint;
 /**
  * Contains all endpoints of the api
  */
-public class ImageType {
+public interface ImageType {
+
+    /**
+     * Returns the actual endpoint of the type
+     * @return Endpoint
+     */
+    public Endpoint getEndpoint();
 
     /**
      * Contains all SFW image endpoints of the api
      */
-    public enum SFW implements IT{
+    enum SFW implements ImageType{
         BACKGROUND(Endpoint.SFW_Background),
         BITE(Endpoint.SFW_Bite),
         BLUSH(Endpoint.SFW_Blush),
@@ -67,7 +73,7 @@ public class ImageType {
     /**
      * Contains all SFW image endpoints of the api
      */
-    public enum NSFW implements IT{
+    enum NSFW implements ImageType{
         ANAL(Endpoint.NSFW_Anal),
         BLOWJOB(Endpoint.NSFW_Blowjob),
         CUM(Endpoint.NSFW_Cum),
@@ -91,16 +97,5 @@ public class ImageType {
         public Endpoint getEndpoint() {
             return endpoint;
         }
-    }
-
-    /**
-     * Used to provide an easy to use link
-     */
-    public interface IT {
-        /**
-         * Returns the equivalent endpoint
-         * @return Endpoint
-         */
-        public Endpoint getEndpoint();
     }
 }

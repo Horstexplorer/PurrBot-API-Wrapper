@@ -16,7 +16,7 @@
 
 package de.netbeacon.purrito.core.request;
 
-import de.netbeacon.purrito.core.Purrito;
+import de.netbeacon.purrito.core.PurritoRaw;
 import de.netbeacon.purrito.core.responses.IResponse;
 import de.netbeacon.purrito.core.responses.ResponseData;
 import de.netbeacon.purrito.core.responses.ResponseError;
@@ -45,7 +45,7 @@ public class Request {
         DELETE();
     }
 
-    private final Logger logger = LoggerFactory.getLogger(Purrito.class);
+    private final Logger logger = LoggerFactory.getLogger(PurritoRaw.class);
 
     private final OkHttpClient okHttpClient;
     private final Executor executor;
@@ -138,7 +138,7 @@ public class Request {
      * @param onSuccess what should happen if the communication succeeded
      * @param onError what should happen if the communication failed
      */
-    public void execute(Consumer<IResponse.Success> onSuccess, Consumer<IResponse.Error> onError){
+    public void execute(Consumer<IResponse.Success> onSuccess, Consumer<Exception> onError){
         okHttpClient.newCall(request).enqueue(new Callback() {
 
             @Override

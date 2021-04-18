@@ -22,7 +22,7 @@ import okhttp3.OkHttpClient;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class Purrito {
+public class PurritoRaw {
 
     private final OkHttpClient okHttpClient;
     private final Executor executor;
@@ -30,7 +30,7 @@ public class Purrito {
     /**
      * Creates a new instance of the wrapper
      */
-    public Purrito(){
+    public PurritoRaw(){
         this.okHttpClient = new OkHttpClient();
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
@@ -39,7 +39,7 @@ public class Purrito {
      * Creates a new instance of the wrapper using the specified okhttp client
      * @param okHttpClient okhttp client
      */
-    public Purrito(OkHttpClient okHttpClient){
+    public PurritoRaw(OkHttpClient okHttpClient){
         this.okHttpClient = okHttpClient;
         this.executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
@@ -49,13 +49,13 @@ public class Purrito {
      * @param okHttpClient okhttp client
      * @param executor executor
      */
-    public Purrito(OkHttpClient okHttpClient, Executor executor){
+    public PurritoRaw(OkHttpClient okHttpClient, Executor executor){
         this.okHttpClient = okHttpClient;
         this.executor = executor;
     }
 
     /**
-     * Returns a new api request builder which shall be configured to make a new request to the api
+     * Returns a new api request builder which shall be configured to make a new request to the apipurrito
      * @return Request Builder
      */
     public Request.Builder newRequest(){

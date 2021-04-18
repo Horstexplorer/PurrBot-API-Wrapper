@@ -53,9 +53,9 @@ In this example we get the execution stage returning us an image object from the
 The imageType will be what type of image you like to receive starting with if it should be SFW or NSFW, the contentType will be what type of image you want (gif/image).
 Keep in mind that not all image types support all content types.
 ```
-ExecutionStage<Image> executionStage = getAnimeImageOf(imageType, contentType);
+ExecutionStage<Image> executionStage = purrito.getAnimeImageOf(imageType, contentType);
 // example
-ExecutionStage<Image> executionStage = getAnimeImageOf(ImageType.SFW.HUG, ContentType.GIF);
+ExecutionStage<Image> executionStage = purrito.getAnimeImageOf(ImageType.SFW.HUG, ContentType.GIF);
 ```
 Now there are two ways to receive the image - a blocking and a non-blocking (preferred) way.
 For our example above this could look like this:

@@ -16,7 +16,7 @@
 
 package de.netbeacon.purrito.qol.typewrap;
 
-import de.netbeacon.purrito.core.Purrito;
+import de.netbeacon.purrito.core.PurritoRaw;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +34,7 @@ import java.nio.file.Path;
 public class Image {
 
     private final byte[] bytes;
-    private final Logger logger = LoggerFactory.getLogger(Purrito.class);
+    private final Logger logger = LoggerFactory.getLogger(PurritoRaw.class);
 
     /**
      * Creates a new instance of this class

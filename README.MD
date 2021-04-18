@@ -24,64 +24,47 @@
 [PurrBot - API](https://docs.purrbot.site)
 
 ## Usage
-This wrapper provides various ways to interact with the image api.  
+This wrapper provides two ways of interacting with the api - an simplified one and a more raw one for when you want a maximum of customisability.  
 A full description of what is possible can be accessed through the javadocs.  
+
+### Simplified (Default)
+Lets start with creating a new client to interact with the api. The client is intended to be reused for all of your requests but if you see the need to have multiple instance of it, that works aswell.
+```java
+Purrito purrito = new Purrito();
+```
+Now there are various things you can do to interact with the api - all of which will return an execution stage object
+In this example we get the execution stage returning us an image object from the api data.
+The imageType will be what type of image you like to receive starting with if it should be SFW or NSFW, the contentType will be what type of image you want (gif/image).
+Keep in mind that not all image types support all content types.
+```
+ExecutionStage<Image> executionStage = getAnimeImageOf(imageType, contentType);
+// example
+ExecutionStage<Image> executionStage = getAnimeImageOf(ImageType.SFW.HUG, ContentType.GIF);
+```
+Now there are two ways to receive the image - a blocking and a non-blocking (preferred) way.
+For our example above this could look like this:
+```java
+// blocking
+Image image = executionStage.sync(); // will return null if something went wrong and logs an exception
+// non blocking
+executionStage.async((image) -> { // do something with the image here }); // will call the consumer on success and log an exception if things went wrong
+executionStage.async((image) -> { // do something with the image here }, (error) -> { // do something with the error here}); // will call the first consumer on success and the second one with the exception if things went wrong
+```
+
 ### Raw
-#### Prepare the wrapper
-Create a new instance of the class to prepare the wrapper. This instance should be used for all requests (but you can create multiple instances if that is needed somehow)
+As the simplified version is intended to be easily used everywhere it might not contain all features you like to work with.
+Therfore you can use the more raw interaction with the api.
+A short example below:
 ```java
- Purrito purrito = new Purrito(); 
-```
-#### Build a request
-A request can be created like the example below
-```java
-Request.Builder newRequestBuilder = purrito.newRequest();
-Request request = newRequestBuilder
-                    .useEndpoint(Endpoint.SFW_Bite)
-                    .getReturnType(Endpoint.ReturnType.JSON_w_GIF)
-                    .prepare();
-```
-A basic example on how to interact with the api is shown below: You decide what to do with the responses
-#### Sync
-You can get the response in a blocking way
-```java
-IResponse iResponse = request.execute();
-if(iResponse instanceof IResponse.Success){
-    // handle response (might require additional checks)
-}else{
-    // handle error
-}
-```
-#### Async
-... or you can use it in a non-blocking way
-```java
-request.execute(success -> {
-        // handle response (might require additional checks)
-    }, error -> {
-        // handle error
-});
-```
+PurritoRaw purritoRaw = new PurritoRaw();
+Request request = purritoRaw.newRequest()
+                            .useEndpoint(endpoint)
+                            .getReturnType(returnType)
+                            .addTransmissionData(jsonPayload)
+                            .prepare();
+// blocking
+IResponse response = request.execute(); // requires additional checks for the iResponse if things went right
+// non blocking
+request.execute(iResponse -> , error ->); // requires additional checks or the iResponse if things went right
 
-### Simple
-The wrapper also provides tools to do what you want to do in a more easy way. Keep in mind that not all features are available that way, and you loose a lot of customisability.  
-
-#### Prepare the wrapper
-We need to prepare the wrapper aswell but instead of using the way mentioned above we use:
-```java
-Purritowo purritowo = new Purritowo();
-```
-
-#### Sync
-You still have the possibility to get the results in a blocking way
-```
-String url = purritowo.doSync().getImageURL(ImageType.SFW.DANCE, ContentType.GIF);
-if(url == null){
-  // some error occured - view logs
-}
-```
-
-#### Async
-... or in a non-blocking way
-```
-purritowo.doAsync().getImageURL(ImageType.SFW.DANCE, ContentType.GIF, (url) -> { // do something with the url }, (error) -> { // handle errors });
 ```

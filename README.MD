@@ -5,15 +5,8 @@
 - Download  
 - Links  
 - Usage
+  - Simplified (Default)
   - Raw
-    - Prepare the wrapper
-    - Build a request
-    - Sync execution
-    - Async execution
-  - Simple
-    - Prepare the wrapper
-    - Sync execution
-    - Async execution
 
 ## Download the latest version here
 Get it from Nexus  

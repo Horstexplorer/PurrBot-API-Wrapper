@@ -16,8 +16,31 @@
     - Async execution
 
 ## Download the latest version here
-[View all](https://ci.netbeacon.de/viewType.html?buildTypeId=Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper&tab=buildTypeStatusDiv)  
+Get it from Nexus  
+```
+Gradle:
+maven {
+  url 'https://nexus.hypercdn.de/repository/hypercdn-maven'
+}
+
+implementation group: 'de.netbeacon.purrito', name: 'PurrBot-API-Wrapper', version: '#.#.#'
+
+
+Maven:
+<repository>
+  <url>https://nexus.hypercdn.de/repository/hypercdn-maven</url>
+</repository>
+
+<dependency>
+  <groupId>de.netbeacon.purrito</groupId>
+  <artifactId>PurrBot-API-Wrapper</artifactId>
+  <version>#.#.#</version>
+</dependency>
+```
+Or from our CI  
+[View all](https://ci.netbeacon.de/viewType.html?buildTypeId=Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper&tab=buildTypeStatusDiv) /
 [Direct download](https://ci.netbeacon.de/repository/download/Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper/latest.lastSuccessful/PurrBot-API-Wrapper_latest.jar)  
+Or here from GitHub
 
 ## Links
 [PurrBot](https://purrbot.site)  

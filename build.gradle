@@ -24,10 +24,10 @@ publishing {
     repositories {
         maven {
             credentials {
-                username System.getenv('NEXUS_USER')
-                password System.getenv('NEXUS_PASSWORD')
+                username System.getenv('nexus_hypercdn_user')
+                password System.getenv('nexus_hypercdn_password')
             }
-            url "https://nexus.hypercdn.de/repository/HyperCDN_maven/"
+            url "https://nexus.hypercdn.de/repository/hypercdn-maven/"
         }
     }
     publications {

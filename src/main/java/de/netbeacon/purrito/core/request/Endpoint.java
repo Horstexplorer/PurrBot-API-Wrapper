@@ -47,7 +47,7 @@ public enum Endpoint {
     SFW_Kitsune(Request.Method.GET,"/img/sfw/kitsune/", false,null, ReturnType.JSON, ReturnType.JSON_w_IMG),
     SFW_Lick(Request.Method.GET,"/img/sfw/lick/", false,null, ReturnType.JSON, ReturnType.JSON_w_GIF),
     SFW_Neko(Request.Method.GET,"/img/sfw/neko/", false,null, ReturnType.JSON, ReturnType.JSON_w_IMG, ReturnType.JSON_w_GIF),
-    SFW_Okami(Request.Method.GET,"/img/sfw/okami/", false,null, ReturnType.JSON, ReturnType.JSON_w_IMG),
+    SFW_Ookami(Request.Method.GET,"/img/sfw/okami/", false,null, ReturnType.JSON, ReturnType.JSON_w_IMG),
     SFW_Pat(Request.Method.GET,"/img/sfw/pat/", false,null, ReturnType.JSON, ReturnType.JSON_w_GIF),
     SFW_Poke(Request.Method.GET,"/img/sfw/poke/", false,null, ReturnType.JSON, ReturnType.JSON_w_GIF),
     SFW_Senko(Request.Method.GET,"/img/sfw/senko/", false,null, ReturnType.JSON, ReturnType.JSON_w_IMG),

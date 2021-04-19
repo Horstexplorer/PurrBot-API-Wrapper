@@ -49,14 +49,14 @@ public interface ImageType {
         KITSUNE(Endpoint.SFW_Kitsune),
         LICK(Endpoint.SFW_Lick),
         NEKO(Endpoint.NSFW_Neko),
-        OKAMI(Endpoint.SFW_Okami),
+        OOKAMI(Endpoint.SFW_Ookami),
         PAT(Endpoint.SFW_Pat),
         POKE(Endpoint.SFW_Poke),
         SENKO(Endpoint.SFW_Senko),
         SLAP(Endpoint.SFW_Slap),
         SMILE(Endpoint.SFW_Smile),
         TAIL(Endpoint.SFW_Tail),
-        TICKEL(Endpoint.SFW_Tickle);
+        TICKLE(Endpoint.SFW_Tickle);
 
         private final Endpoint endpoint;
 

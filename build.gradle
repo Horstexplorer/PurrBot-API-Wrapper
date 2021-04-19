@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.netbeacon.purrito'
-version '2.0.0'
+version '2.0.1'
 
 repositories {
     mavenCentral()
@@ -20,6 +20,10 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 }
 
+shadowJar {
+    archiveClassifier.set("")
+}
+
 publishing {
     repositories {
         maven {
@@ -31,8 +35,32 @@ publishing {
         }
     }
     publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
+        maven(MavenPublication) {
+            artifact(tasks["shadowJar"])
+            pom {
+                name = 'PurrBot API Wrapper'
+                description = 'A simple wrapper for the anime image api provided by PurrBot'
+                url = 'https://github.com/Horstexplorer/PurrBot-API-Wrapper'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'horstexplorer'
+                        name = 'horstexplorer'
+                        email = 'null@null.null'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/Horstexplorer/PurrBot-API-Wrapper'
+                    developerConnection = 'scm:git:ssh:git@github.com:Horstexplorer/PurrBot-API-Wrapper'
+                    url = 'https://github.com/Horstexplorer/PurrBot-API-Wrapper'
+                }
+            }
         }
     }
 }

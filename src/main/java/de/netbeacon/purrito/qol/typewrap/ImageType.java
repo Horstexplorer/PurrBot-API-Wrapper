@@ -48,7 +48,7 @@ public interface ImageType {
         KISS(Endpoint.SFW_Kiss),
         KITSUNE(Endpoint.SFW_Kitsune),
         LICK(Endpoint.SFW_Lick),
-        NEKO(Endpoint.NSFW_Neko),
+        NEKO(Endpoint.SFW_Neko),
         OOKAMI(Endpoint.SFW_Ookami),
         PAT(Endpoint.SFW_Pat),
         POKE(Endpoint.SFW_Poke),

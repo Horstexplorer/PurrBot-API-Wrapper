@@ -23,9 +23,15 @@ import de.netbeacon.purrito.core.request.Endpoint;
  */
 public enum ContentType {
         IMAGE(Endpoint.ReturnType.JSON_w_IMG),
-        GIF(Endpoint.ReturnType.JSON_w_GIF);
+        GIF(Endpoint.ReturnType.JSON_w_GIF),
+        AVAILABLE()
+    ;
 
     private final Endpoint.ReturnType returnType;
+
+    ContentType(){
+        this.returnType = null;
+    }
 
     ContentType(Endpoint.ReturnType returnType){
         this.returnType = returnType;
@@ -37,5 +43,21 @@ public enum ContentType {
      */
     public Endpoint.ReturnType getReturnTypes() {
         return returnType;
+    }
+
+    /**
+     * Helper method
+     * @param imageType
+     * @return available content type of image; either gif or image
+     */
+    public static ContentType findAvailable(ImageType imageType){
+        var types = imageType.getEndpoint().getReturnTypes();
+        if(types.contains(Endpoint.ReturnType.JSON_w_GIF)){
+            return ContentType.GIF;
+        }else if(types.contains(Endpoint.ReturnType.JSON_w_IMG)){
+            return ContentType.IMAGE;
+        }else{
+            return null;
+        }
     }
 }

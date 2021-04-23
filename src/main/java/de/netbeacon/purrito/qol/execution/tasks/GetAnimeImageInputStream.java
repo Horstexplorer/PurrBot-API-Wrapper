@@ -34,7 +34,7 @@ public class GetAnimeImageInputStream extends ExecutionTask<InputStream> {
 
     public GetAnimeImageInputStream(ImageType imageType, ContentType contentType){
         this.imageType = imageType;
-        this.contentType = contentType;
+        this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
     }
 
     @Override

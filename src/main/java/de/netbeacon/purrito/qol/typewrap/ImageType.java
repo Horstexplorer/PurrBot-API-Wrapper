@@ -18,6 +18,8 @@ package de.netbeacon.purrito.qol.typewrap;
 
 import de.netbeacon.purrito.core.request.Endpoint;
 
+import java.util.Random;
+
 /**
  * Contains all endpoints of the api
  */
@@ -56,17 +58,48 @@ public interface ImageType {
         SLAP(Endpoint.SFW_Slap),
         SMILE(Endpoint.SFW_Smile),
         TAIL(Endpoint.SFW_Tail),
-        TICKLE(Endpoint.SFW_Tickle);
+        TICKLE(Endpoint.SFW_Tickle),
 
-        private final Endpoint endpoint;
+        RANDOM(
+                Endpoint.SFW_Bite,
+                Endpoint.SFW_Blush,
+                Endpoint.SFW_Cry,
+                Endpoint.SFW_Cuddle,
+                Endpoint.SFW_Dance,
+                Endpoint.SFW_Eevee,
+                Endpoint.SFW_Feed,
+                Endpoint.SFW_Fluff,
+                Endpoint.SFW_Holo,
+                Endpoint.SFW_Hug,
+                Endpoint.SFW_Icon,
+                Endpoint.SFW_Kiss,
+                Endpoint.SFW_Kitsune,
+                Endpoint.SFW_Lick,
+                Endpoint.SFW_Neko,
+                Endpoint.SFW_Ookami,
+                Endpoint.SFW_Pat,
+                Endpoint.SFW_Poke,
+                Endpoint.SFW_Senko,
+                Endpoint.SFW_Slap,
+                Endpoint.SFW_Smile,
+                Endpoint.SFW_Tail,
+                Endpoint.SFW_Tickle
+        );
 
-        SFW(Endpoint endpoint){
-            this.endpoint = endpoint;
+        private final Endpoint[] endpoints;
+        private final Random random;
+
+        SFW(Endpoint...endpoint){
+            this.endpoints = endpoint;
+            this.random = endpoints.length > 1 ? new Random() : null;
         }
 
         @Override
         public Endpoint getEndpoint() {
-            return endpoint;
+            if(endpoints.length == 1){
+                return endpoints[0];
+            }
+            return endpoints[random.nextInt(endpoints.length)];
         }
     }
 
@@ -81,21 +114,42 @@ public interface ImageType {
         NEKO(Endpoint.NSFW_Neko),
         PUSSYLICK(Endpoint.NSFW_Pussylick),
         SOLO(Endpoint.NSFW_Solo),
+        THREESOME(Endpoint.NSFW_Threesome_fff, Endpoint.NSFW_Threesome_ffm, Endpoint.NSFW_Threesome_mmf),
         THREESOME_FFF(Endpoint.NSFW_Threesome_fff),
         THREESOME_FFM(Endpoint.NSFW_Threesome_ffm),
         THREESOME_MMF(Endpoint.NSFW_Threesome_mmf),
         YAOI(Endpoint.NSFW_Yaoi),
-        YURI(Endpoint.NSFW_Yuri);
+        YURI(Endpoint.NSFW_Yuri),
 
-        private final Endpoint endpoint;
+        RANDOM(
+                Endpoint.NSFW_Anal,
+                Endpoint.NSFW_Blowjob,
+                Endpoint.NSFW_Cum,
+                Endpoint.NSFW_Fuck,
+                Endpoint.NSFW_Neko,
+                Endpoint.NSFW_Pussylick,
+                Endpoint.NSFW_Solo,
+                Endpoint.NSFW_Threesome_fff,
+                Endpoint.NSFW_Threesome_ffm,
+                Endpoint.NSFW_Threesome_mmf,
+                Endpoint.NSFW_Yaoi,
+                Endpoint.NSFW_Yuri
+        );
 
-        NSFW(Endpoint endpoint){
-            this.endpoint = endpoint;
+        private final Endpoint[] endpoints;
+        private final Random random;
+
+        NSFW(Endpoint...endpoint){
+            this.endpoints = endpoint;
+            this.random = endpoints.length > 1 ? new Random() : null;
         }
 
         @Override
         public Endpoint getEndpoint() {
-            return endpoint;
+            if(endpoints.length == 1){
+                return endpoints[0];
+            }
+            return endpoints[random.nextInt(endpoints.length)];
         }
     }
 }

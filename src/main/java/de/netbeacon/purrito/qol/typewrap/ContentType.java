@@ -21,43 +21,47 @@ import de.netbeacon.purrito.core.request.Endpoint;
 /**
  * Contains all supported content types
  */
-public enum ContentType {
-        IMAGE(Endpoint.ReturnType.JSON_w_IMG),
-        GIF(Endpoint.ReturnType.JSON_w_GIF),
-        AVAILABLE()
-    ;
+public enum ContentType{
+	IMAGE(Endpoint.ReturnType.JSON_w_IMG),
+	GIF(Endpoint.ReturnType.JSON_w_GIF),
+	AVAILABLE();
 
-    private final Endpoint.ReturnType returnType;
+	private final Endpoint.ReturnType returnType;
 
-    ContentType(){
-        this.returnType = null;
-    }
+	ContentType(){
+		this.returnType = null;
+	}
 
-    ContentType(Endpoint.ReturnType returnType){
-        this.returnType = returnType;
-    }
+	ContentType(Endpoint.ReturnType returnType){
+		this.returnType = returnType;
+	}
 
-    /**
-     * Returns the return type equivalent
-     * @return return type
-     */
-    public Endpoint.ReturnType getReturnTypes() {
-        return returnType;
-    }
+	/**
+	 * Helper method
+	 *
+	 * @param imageType
+	 *
+	 * @return available content type of image; either gif or image
+	 */
+	public static ContentType findAvailable(ImageType imageType){
+		var types = imageType.getEndpoint().getReturnTypes();
+		if(types.contains(Endpoint.ReturnType.JSON_w_GIF)){
+			return ContentType.GIF;
+		}
+		else if(types.contains(Endpoint.ReturnType.JSON_w_IMG)){
+			return ContentType.IMAGE;
+		}
+		else{
+			return null;
+		}
+	}
 
-    /**
-     * Helper method
-     * @param imageType
-     * @return available content type of image; either gif or image
-     */
-    public static ContentType findAvailable(ImageType imageType){
-        var types = imageType.getEndpoint().getReturnTypes();
-        if(types.contains(Endpoint.ReturnType.JSON_w_GIF)){
-            return ContentType.GIF;
-        }else if(types.contains(Endpoint.ReturnType.JSON_w_IMG)){
-            return ContentType.IMAGE;
-        }else{
-            return null;
-        }
-    }
+	/**
+	 * Returns the return type equivalent
+	 *
+	 * @return return type
+	 */
+	public Endpoint.ReturnType getReturnTypes(){
+		return returnType;
+	}
 }

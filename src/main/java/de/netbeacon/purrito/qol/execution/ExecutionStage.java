@@ -20,43 +20,48 @@ import de.netbeacon.purrito.core.PurritoRaw;
 
 import java.util.function.Consumer;
 
-public class ExecutionStage<O> {
+public class ExecutionStage<O>{
 
-    private final PurritoRaw purritoRaw;
-    private final ExecutionTask<O> executionTask;
+	private final PurritoRaw purritoRaw;
+	private final ExecutionTask<O> executionTask;
 
-    /**
-     * Creates a new instance of this class
-     * @param purritoRaw instance
-     * @param executionTask task to execute
-     */
-    public ExecutionStage(PurritoRaw purritoRaw, ExecutionTask<O> executionTask){
-        this.purritoRaw = purritoRaw;
-        this.executionTask = executionTask;
-    }
+	/**
+	 * Creates a new instance of this class
+	 *
+	 * @param purritoRaw    instance
+	 * @param executionTask task to execute
+	 */
+	public ExecutionStage(PurritoRaw purritoRaw, ExecutionTask<O> executionTask){
+		this.purritoRaw = purritoRaw;
+		this.executionTask = executionTask;
+	}
 
-    /**
-     * Execute the task sync and return the result
-     * @return result object or null if anything went wrong
-     */
-    public O sync(){
-        return executionTask.sync(purritoRaw);
-    }
+	/**
+	 * Execute the task sync and return the result
+	 *
+	 * @return result object or null if anything went wrong
+	 */
+	public O sync(){
+		return executionTask.sync(purritoRaw);
+	}
 
-    /**
-     * Execute the task async with a success and error consumer
-     * @param onSuccess called on success with the result
-     */
-    public void async(Consumer<O> onSuccess){
-        async(onSuccess, null);
-    }
+	/**
+	 * Execute the task async with a success and error consumer
+	 *
+	 * @param onSuccess called on success with the result
+	 */
+	public void async(Consumer<O> onSuccess){
+		async(onSuccess, null);
+	}
 
-    /**
-     * Execute the task async with a success and error consumer
-     * @param onSuccess called on success with the result
-     * @param onError called on error with the exception
-     */
-    public void async(Consumer<O> onSuccess, Consumer<Exception> onError){
-        executionTask.async(purritoRaw, onSuccess, onError);
-    }
+	/**
+	 * Execute the task async with a success and error consumer
+	 *
+	 * @param onSuccess called on success with the result
+	 * @param onError   called on error with the exception
+	 */
+	public void async(Consumer<O> onSuccess, Consumer<Exception> onError){
+		executionTask.async(purritoRaw, onSuccess, onError);
+	}
+
 }

@@ -17,10 +17,9 @@
 package de.netbeacon.purrito.qol.execution;
 
 import de.netbeacon.purrito.core.PurritoRaw;
+import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.function.Consumer;
 
 public abstract class ExecutionTask<O> {
 
@@ -28,16 +27,19 @@ public abstract class ExecutionTask<O> {
 
     /**
      * Execute the task and wait for the result
+     *
      * @param purritoRaw purritoraw instance
+     *
      * @return the result object
      */
     protected abstract O sync(PurritoRaw purritoRaw);
 
     /**
      * Execute the task and call the consumers accordingly when something happened
+     *
      * @param purritoRaw purritoraw instance
-     * @param onSuccess returns the result object on success
-     * @param onError returns the exception if any occurs
+     * @param onSuccess  returns the result object on success
+     * @param onError    returns the exception if any occurs
      */
     protected abstract void async(PurritoRaw purritoRaw, Consumer<O> onSuccess, Consumer<Exception> onError);
 

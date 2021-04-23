@@ -22,7 +22,6 @@ import de.netbeacon.purrito.qol.execution.ExecutionStage;
 import de.netbeacon.purrito.qol.execution.ExecutionTask;
 import de.netbeacon.purrito.qol.typewrap.ContentType;
 import de.netbeacon.purrito.qol.typewrap.ImageType;
-
 import java.io.InputStream;
 import java.net.URL;
 import java.util.function.Consumer;
@@ -32,21 +31,24 @@ public class GetAnimeImageInputStream extends ExecutionTask<InputStream> {
     private final ImageType imageType;
     private final ContentType contentType;
 
-    public GetAnimeImageInputStream(ImageType imageType, ContentType contentType){
+    public GetAnimeImageInputStream(ImageType imageType, ContentType contentType) {
         this.imageType = imageType;
-        this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
+        this.contentType =
+                contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
     }
 
     @Override
     protected InputStream sync(PurritoRaw purritoRaw) {
-        try{
-            ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
+        try {
+            ExecutionStage<String> executionStage =
+                    new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
             String url = executionStage.sync();
-            if(url == null){
+            if (url == null) {
                 return null;
             }
             return new URL(url).openStream();
-        }catch (Exception e){
+        }
+        catch (Exception e) {
             logger.error("Something went wrong getting the image input stream:", e);
         }
         return null;
@@ -54,15 +56,18 @@ public class GetAnimeImageInputStream extends ExecutionTask<InputStream> {
 
     @Override
     protected void async(PurritoRaw purritoRaw, Consumer<InputStream> onSuccess, Consumer<Exception> onError) {
-        ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
+        ExecutionStage<String> executionStage =
+                new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
         executionStage.async((url) -> {
-            try{
+            try {
                 onSuccess.accept(new URL(url).openStream());
-            }catch (Exception e){
-                if(onError != null){
+            }
+            catch (Exception e) {
+                if (onError != null) {
                     logger.debug("Something went wrong getting the image input stream:", e);
                     onError.accept(new ResponseError(e));
-                }else{
+                }
+                else {
                     logger.error("Something went wrong getting the image input stream:", e);
                 }
             }

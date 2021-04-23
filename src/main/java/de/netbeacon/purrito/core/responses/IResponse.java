@@ -20,27 +20,28 @@ import org.json.JSONObject;
 
 public interface IResponse {
 
-    enum Type {
-        DATA,
-        ERROR;
-    }
-
     /**
      * Returns the response type - data on success, error on failure
-     * @return
      */
     Type getResponseType();
+
+    enum Type {
+        DATA,
+        ERROR
+    }
 
     interface Success extends IResponse {
 
         /**
          * Can be used to get the payload as bytes
+         *
          * @return byte[]
          */
         byte[] getBytePayload();
 
         /**
          * Can be used to convert the payload to a json object
+         *
          * @return json object
          */
         JSONObject getAsJSONPayload();
@@ -51,6 +52,7 @@ public interface IResponse {
 
         /**
          * Returns the throwable
+         *
          * @return throwable
          */
         Throwable getThrowable();

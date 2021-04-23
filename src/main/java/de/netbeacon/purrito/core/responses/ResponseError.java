@@ -25,28 +25,31 @@ public class ResponseError extends RuntimeException implements IResponse.Error {
 
     /**
      * Creates a new instance of this class
+     *
      * @param message error message
      */
-    public ResponseError(String message){
+    public ResponseError(String message) {
         super(message);
         this.throwable = this;
     }
 
     /**
      * Creates a new instance of this class
+     *
      * @param throwable throwable
      */
-    public ResponseError(Throwable throwable){
+    public ResponseError(Throwable throwable) {
         super(throwable);
         this.throwable = throwable;
     }
 
     /**
      * Creates a new instance of this class
-     * @param message error message
+     *
+     * @param message   error message
      * @param throwable throwable
      */
-    public ResponseError(String message, Throwable throwable){
+    public ResponseError(String message, Throwable throwable) {
         super(message, throwable);
         this.throwable = throwable;
     }

@@ -17,7 +17,6 @@
 package de.netbeacon.purrito.qol.typewrap;
 
 import de.netbeacon.purrito.core.request.Endpoint;
-
 import java.util.Random;
 
 /**
@@ -27,14 +26,15 @@ public interface ImageType {
 
     /**
      * Returns the actual endpoint of the type
+     *
      * @return Endpoint
      */
-    public Endpoint getEndpoint();
+    Endpoint getEndpoint();
 
     /**
      * Contains all SFW image endpoints of the api
      */
-    enum SFW implements ImageType{
+    enum SFW implements ImageType {
         BACKGROUND(Endpoint.SFW_Background),
         BITE(Endpoint.SFW_Bite),
         BLUSH(Endpoint.SFW_Blush),
@@ -89,14 +89,14 @@ public interface ImageType {
         private final Endpoint[] endpoints;
         private final Random random;
 
-        SFW(Endpoint...endpoint){
+        SFW(Endpoint... endpoint) {
             this.endpoints = endpoint;
             this.random = endpoints.length > 1 ? new Random() : null;
         }
 
         @Override
         public Endpoint getEndpoint() {
-            if(endpoints.length == 1){
+            if (endpoints.length == 1) {
                 return endpoints[0];
             }
             return endpoints[random.nextInt(endpoints.length)];
@@ -106,7 +106,7 @@ public interface ImageType {
     /**
      * Contains all SFW image endpoints of the api
      */
-    enum NSFW implements ImageType{
+    enum NSFW implements ImageType {
         ANAL(Endpoint.NSFW_Anal),
         BLOWJOB(Endpoint.NSFW_Blowjob),
         CUM(Endpoint.NSFW_Cum),
@@ -139,14 +139,14 @@ public interface ImageType {
         private final Endpoint[] endpoints;
         private final Random random;
 
-        NSFW(Endpoint...endpoint){
+        NSFW(Endpoint... endpoint) {
             this.endpoints = endpoint;
             this.random = endpoints.length > 1 ? new Random() : null;
         }
 
         @Override
         public Endpoint getEndpoint() {
-            if(endpoints.length == 1){
+            if (endpoints.length == 1) {
                 return endpoints[0];
             }
             return endpoints[random.nextInt(endpoints.length)];

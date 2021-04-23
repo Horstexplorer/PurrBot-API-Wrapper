@@ -17,16 +17,15 @@
 package de.netbeacon.purrito.qol.typewrap;
 
 import de.netbeacon.purrito.core.PurritoRaw;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import javax.imageio.ImageIO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents an image object when the data is held locally
@@ -38,36 +37,41 @@ public class Image {
 
     /**
      * Creates a new instance of this class
+     *
      * @param bytes the image as bytes
      */
-    public Image(byte[] bytes){
+    public Image(byte[] bytes) {
         this.bytes = bytes;
     }
 
     /**
      * Get the image as raw bytes
+     *
      * @return image bytes
      */
-    public byte[] getBytes(){
+    public byte[] getBytes() {
         return bytes;
     }
 
     /**
      * Creates an InputStream from the bytes
+     *
      * @return input stream
      */
-    public InputStream getAsInputStream(){
+    public InputStream getAsInputStream() {
         return new ByteArrayInputStream(bytes);
     }
 
     /**
      * Creates a buffered image from the bytes
+     *
      * @return BufferedImage or null on exception
      */
-    public BufferedImage getAsBufferedImage(){
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes)){
+    public BufferedImage getAsBufferedImage() {
+        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes)) {
             return ImageIO.read(byteArrayInputStream);
-        }catch (Exception e){
+        }
+        catch (Exception e) {
             logger.error("Failed to get image as BufferedImage", e);
         }
         return null;
@@ -75,13 +79,16 @@ public class Image {
 
     /**
      * Writes the bytes to a file
+     *
      * @param file to save the bytes to
+     *
      * @return the path of the stored file or null on exception
      */
-    public Path writeToFile(File file){
-        try{
+    public Path writeToFile(File file) {
+        try {
             return Files.write(file.toPath(), bytes);
-        }catch (Exception e){
+        }
+        catch (Exception e) {
             logger.error("An exception occurred writing file image to file", e);
         }
         return null;

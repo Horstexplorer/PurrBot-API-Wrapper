@@ -23,23 +23,25 @@ import org.json.JSONObject;
  * Used when a data reception was successful.
  * The data received might still point to an issue with the transmission
  */
-public class ResponseData implements IResponse.Success{
+public class ResponseData implements IResponse.Success {
 
     private final Endpoint.ReturnType returnType;
     private final byte[] bytePayload;
 
     /**
      * Creates a new instance of this class
-     * @param returnType selected return type which should be included in the bytes
+     *
+     * @param returnType  selected return type which should be included in the bytes
      * @param bytePayload the payload
      */
-    public ResponseData(Endpoint.ReturnType returnType, byte[] bytePayload){
+    public ResponseData(Endpoint.ReturnType returnType, byte[] bytePayload) {
         this.returnType = returnType;
         this.bytePayload = bytePayload;
     }
 
     /**
      * Return type of the data included
+     *
      * @return return type
      */
     public Endpoint.ReturnType getReturnType() {

@@ -17,10 +17,9 @@
 package de.netbeacon.utils.json.verification;
 
 import de.netbeacon.utils.fakevoid.FakeVoid;
+import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.Set;
 
 /**
  * Check whether a specific json structure is adhered to
@@ -34,6 +33,7 @@ public class JSONMatcher {
      *
      * @param test the object containing the data
      * @param spec the predefined structure
+     *
      * @return boolean
      */
     public static boolean structureMatch(JSONObject test, JSONObject spec) {
@@ -50,11 +50,12 @@ public class JSONMatcher {
                 return false;
             }
             if (spec.get(key).getClass() == JSONObject.class) {
-                if(!structureMatch(spec.getJSONObject(key), test.getJSONObject(key))){
+                if (!structureMatch(spec.getJSONObject(key), test.getJSONObject(key))) {
                     return false;
                 }
-            } else if (spec.get(key).getClass() == JSONArray.class) {
-                if(!structureMatch(spec.getJSONArray(key), test.getJSONArray(key))){
+            }
+            else if (spec.get(key).getClass() == JSONArray.class) {
+                if (!structureMatch(spec.getJSONArray(key), test.getJSONArray(key))) {
                     return false;
                 }
             }
@@ -68,22 +69,24 @@ public class JSONMatcher {
      *
      * @param test the object containing the data
      * @param spec the predefined structure
+     *
      * @return boolean
      */
     public static boolean structureMatch(JSONArray test, JSONArray spec) {
-        if(spec.isEmpty()){
+        if (spec.isEmpty()) {
             return true;
         }
-        for(Object o : test){
+        for (Object o : test) {
             if (spec.get(0).getClass() != o.getClass()) {
                 return false;
             }
-            if(spec.get(0).getClass() == JSONObject.class){
-                if(!structureMatch(spec.getJSONObject(0), (JSONObject) o)){
+            if (spec.get(0).getClass() == JSONObject.class) {
+                if (!structureMatch(spec.getJSONObject(0), (JSONObject) o)) {
                     return false;
                 }
-            }else if(spec.get(0).getClass() == JSONArray.class){
-                if(!structureMatch(spec.getJSONArray(0), (JSONArray) o)){
+            }
+            else if (spec.get(0).getClass() == JSONArray.class) {
+                if (!structureMatch(spec.getJSONArray(0), (JSONArray) o)) {
                     return false;
                 }
             }
@@ -96,34 +99,36 @@ public class JSONMatcher {
      *
      * @param data the object containing the data
      * @param spec the predefined structure
+     *
      * @return JSONObject
      */
-    public static JSONObject structureUpgrade(JSONObject data, JSONObject spec){
+    public static JSONObject structureUpgrade(JSONObject data, JSONObject spec) {
         Set<String> structSet = spec.keySet();
         JSONObject copy = new JSONObject(data.toString());
         // remove unnecessary structures
-        for(String s : data.keySet()){
-            if(!structSet.contains(s)){
+        for (String s : data.keySet()) {
+            if (!structSet.contains(s)) {
                 copy.remove(s);
             }
         }
         Set<String> copySet = copy.keySet();
         // check types for each key
-        for(String key : structSet){
+        for (String key : structSet) {
             // does it exist
-            if(!copySet.contains(key)){
+            if (!copySet.contains(key)) {
                 copy.put(key, spec.get(key));
                 continue;
             }
             // is it of the same class
-            if(copy.get(key).getClass() != spec.get(key).getClass()){
+            if (copy.get(key).getClass() != spec.get(key).getClass()) {
                 copy.put(key, spec.get(key));
                 continue;
             }
             // if it is a json object or json array
-            if(copy.get(key).getClass() == JSONObject.class){
+            if (copy.get(key).getClass() == JSONObject.class) {
                 copy.put(key, structureUpgrade(spec.getJSONObject(key), copy.getJSONObject(key)));
-            }else if(copy.get(key).getClass() == JSONArray.class){
+            }
+            else if (copy.get(key).getClass() == JSONArray.class) {
                 copy.put(key, structureUpgrade(spec.getJSONArray(key), copy.getJSONArray(key)));
             }
         }
@@ -135,29 +140,31 @@ public class JSONMatcher {
      *
      * @param data the object containing the data
      * @param spec the predefined structure
+     *
      * @return JSONArray
      */
-    public static JSONArray structureUpgrade(JSONArray data, JSONArray spec){
-        if(spec.isEmpty()){
+    public static JSONArray structureUpgrade(JSONArray data, JSONArray spec) {
+        if (spec.isEmpty()) {
             return data;
         }
         JSONArray copy = new JSONArray(data.toString());
-        for(int i = 0; i < copy.length(); i++){
+        for (int i = 0; i < copy.length(); i++) {
             // check types
-            if(spec.get(0).getClass() != copy.get(i).getClass()){
+            if (spec.get(0).getClass() != copy.get(i).getClass()) {
                 copy.put(i, FakeVoid.class);
                 continue;
             }
             // if it is a json object or json array
-            if(copy.get(i).getClass() == JSONObject.class){
+            if (copy.get(i).getClass() == JSONObject.class) {
                 copy.put(i, structureUpgrade(spec.getJSONObject(0), copy.getJSONObject(i)));
-            }else if(copy.get(i).getClass() == JSONArray.class){
+            }
+            else if (copy.get(i).getClass() == JSONArray.class) {
                 copy.put(i, structureUpgrade(spec.getJSONArray(0), copy.getJSONArray(i)));
             }
         }
         // remove null
-        for(int i = 0; i < copy.length(); i++){
-            if(copy.get(i) == FakeVoid.class){
+        for (int i = 0; i < copy.length(); i++) {
+            if (copy.get(i) == FakeVoid.class) {
                 copy.remove(i);
                 i = -1; // restart the lööp
             }

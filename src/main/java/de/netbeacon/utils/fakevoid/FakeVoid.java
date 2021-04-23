@@ -21,4 +21,5 @@ package de.netbeacon.utils.fakevoid;
  *
  * @author horstexplorer
  */
-public class FakeVoid {}
+public class FakeVoid {
+}

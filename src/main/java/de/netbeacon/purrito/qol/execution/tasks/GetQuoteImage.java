@@ -23,9 +23,8 @@ import de.netbeacon.purrito.core.responses.ResponseData;
 import de.netbeacon.purrito.core.responses.ResponseError;
 import de.netbeacon.purrito.qol.execution.ExecutionTask;
 import de.netbeacon.purrito.qol.typewrap.Image;
-import org.json.JSONObject;
-
 import java.util.function.Consumer;
+import org.json.JSONObject;
 
 public class GetQuoteImage extends ExecutionTask<Image> {
 
@@ -35,7 +34,7 @@ public class GetQuoteImage extends ExecutionTask<Image> {
     private final String nameColor;
     private final String dateformat;
 
-    public GetQuoteImage(String avatarUrl, String username, String message){
+    public GetQuoteImage(String avatarUrl, String username, String message) {
         this.avatarUrl = avatarUrl;
         this.username = username;
         this.message = message;
@@ -43,7 +42,7 @@ public class GetQuoteImage extends ExecutionTask<Image> {
         this.dateformat = "dd. MMM yyyy";
     }
 
-    public GetQuoteImage(String avatarUrl, String username, String message, String nameColor, String dateformat){
+    public GetQuoteImage(String avatarUrl, String username, String message, String nameColor, String dateformat) {
         this.avatarUrl = avatarUrl;
         this.username = username;
         this.message = message;
@@ -54,20 +53,22 @@ public class GetQuoteImage extends ExecutionTask<Image> {
 
     @Override
     protected Image sync(PurritoRaw purritoRaw) {
-        try{
+        try {
             JSONObject payload = new JSONObject()
-                    .put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
+                    .put("avatar", avatarUrl).put("username", username).put("message", message)
+                    .put("nameColor", nameColor).put("dateFormat", dateformat);
             IResponse iResponse = purritoRaw.newRequest()
                     .useEndpoint(Endpoint.MSC_Quote)
                     .getReturnType(Endpoint.ReturnType.RAW_IMAGE)
                     .addTransmissionData(payload)
                     .prepare()
                     .execute();
-            if(iResponse instanceof ResponseError){
-                throw (ResponseError)iResponse;
+            if (iResponse instanceof ResponseError) {
+                throw (ResponseError) iResponse;
             }
             return new Image(((ResponseData) iResponse).getBytePayload());
-        }catch (Exception e){
+        }
+        catch (Exception e) {
             logger.error("Something went wrong getting the image data:", e);
         }
         return null;
@@ -75,9 +76,10 @@ public class GetQuoteImage extends ExecutionTask<Image> {
 
     @Override
     protected void async(PurritoRaw purritoRaw, Consumer<Image> onSuccess, Consumer<Exception> onError) {
-        try{
+        try {
             JSONObject payload = new JSONObject()
-                    .put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
+                    .put("avatar", avatarUrl).put("username", username).put("message", message)
+                    .put("nameColor", nameColor).put("dateFormat", dateformat);
             purritoRaw.newRequest()
                     .useEndpoint(Endpoint.MSC_Quote)
                     .getReturnType(Endpoint.ReturnType.RAW_IMAGE)
@@ -86,11 +88,13 @@ public class GetQuoteImage extends ExecutionTask<Image> {
                     .execute(success -> {
                         onSuccess.accept(new Image(success.getBytePayload()));
                     }, onError);
-        }catch (Exception e){
-            if(onError != null){
+        }
+        catch (Exception e) {
+            if (onError != null) {
                 logger.debug("Something went wrong getting the image data:", e);
                 onError.accept(new ResponseError(e));
-            }else {
+            }
+            else {
                 logger.error("Something went wrong getting the image data:", e);
             }
         }

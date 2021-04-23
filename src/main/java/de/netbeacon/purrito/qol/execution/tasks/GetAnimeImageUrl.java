@@ -23,37 +23,38 @@ import de.netbeacon.purrito.core.responses.ResponseError;
 import de.netbeacon.purrito.qol.execution.ExecutionTask;
 import de.netbeacon.purrito.qol.typewrap.ContentType;
 import de.netbeacon.purrito.qol.typewrap.ImageType;
-import org.json.JSONObject;
-
 import java.util.function.Consumer;
+import org.json.JSONObject;
 
 public class GetAnimeImageUrl extends ExecutionTask<String> {
 
     private final ImageType imageType;
     private final ContentType contentType;
 
-    public GetAnimeImageUrl(ImageType imageType, ContentType contentType){
+    public GetAnimeImageUrl(ImageType imageType, ContentType contentType) {
         this.imageType = imageType;
-        this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
+        this.contentType =
+                contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
     }
 
     @Override
     protected String sync(PurritoRaw purritoRaw) {
-        try{
+        try {
             IResponse iResponse = purritoRaw.newRequest()
                     .useEndpoint(imageType.getEndpoint())
                     .getReturnType(contentType.getReturnTypes())
                     .prepare()
                     .execute();
-            if(iResponse instanceof ResponseError){
-                throw (ResponseError)iResponse;
+            if (iResponse instanceof ResponseError) {
+                throw (ResponseError) iResponse;
             }
             JSONObject payload = ((ResponseData) iResponse).getAsJSONPayload();
-            if(payload.getBoolean("error")){
+            if (payload.getBoolean("error")) {
                 throw new ResponseError(payload.getString("message"));
             }
             return payload.getString("link");
-        }catch (Exception e){
+        }
+        catch (Exception e) {
             logger.error("Something went wrong getting the image url:", e);
         }
         return null;
@@ -61,34 +62,38 @@ public class GetAnimeImageUrl extends ExecutionTask<String> {
 
     @Override
     protected void async(PurritoRaw purritoRaw, Consumer<String> onSuccess, Consumer<Exception> onError) {
-        try{
+        try {
             purritoRaw.newRequest()
                     .useEndpoint(imageType.getEndpoint())
                     .getReturnType(contentType.getReturnTypes())
-                    .prepare().execute((s) ->{
-                try{
+                    .prepare().execute((s) -> {
+                try {
                     JSONObject payload = s.getAsJSONPayload();
-                    if(payload.getBoolean("error")){
-                        if(onError != null){
-                            logger.error("Something went wrong getting the image url: "+payload.get("message"));
+                    if (payload.getBoolean("error")) {
+                        if (onError != null) {
+                            logger.error("Something went wrong getting the image url: " + payload.get("message"));
                             onError.accept(new ResponseError(payload.getString("message")));
                         }
                     }
                     onSuccess.accept(payload.getString("link"));
-                }catch (Exception e){
-                    if(onError != null){
+                }
+                catch (Exception e) {
+                    if (onError != null) {
                         logger.debug("Something went wrong getting the image url:", e);
                         onError.accept(new ResponseError(e));
-                    }else{
+                    }
+                    else {
                         logger.error("Something went wrong getting the image url:", e);
                     }
                 }
             }, onError);
-        }catch (Exception e){
-            if(onError != null){
+        }
+        catch (Exception e) {
+            if (onError != null) {
                 logger.debug("Something went wrong getting the image url:", e);
                 onError.accept(new ResponseError(e));
-            }else{
+            }
+            else {
                 logger.error("Something went wrong getting the image url:", e);
             }
         }

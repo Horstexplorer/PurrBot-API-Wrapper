@@ -27,72 +27,76 @@ import org.json.JSONObject;
 
 import java.util.function.Consumer;
 
-public class GetQuoteImage extends ExecutionTask<Image> {
+public class GetQuoteImage extends ExecutionTask<Image>{
 
-    private final String avatarUrl;
-    private final String username;
-    private final String message;
-    private final String nameColor;
-    private final String dateformat;
+	private final String avatarUrl;
+	private final String username;
+	private final String message;
+	private final String nameColor;
+	private final String dateformat;
 
-    public GetQuoteImage(String avatarUrl, String username, String message){
-        this.avatarUrl = avatarUrl;
-        this.username = username;
-        this.message = message;
-        this.nameColor = "hex:ffffff";
-        this.dateformat = "dd. MMM yyyy";
-    }
+	public GetQuoteImage(String avatarUrl, String username, String message){
+		this.avatarUrl = avatarUrl;
+		this.username = username;
+		this.message = message;
+		this.nameColor = "hex:ffffff";
+		this.dateformat = "dd. MMM yyyy";
+	}
 
-    public GetQuoteImage(String avatarUrl, String username, String message, String nameColor, String dateformat){
-        this.avatarUrl = avatarUrl;
-        this.username = username;
-        this.message = message;
-        this.nameColor = nameColor;
-        this.dateformat = dateformat;
-    }
+	public GetQuoteImage(String avatarUrl, String username, String message, String nameColor, String dateformat){
+		this.avatarUrl = avatarUrl;
+		this.username = username;
+		this.message = message;
+		this.nameColor = nameColor;
+		this.dateformat = dateformat;
+	}
 
 
-    @Override
-    protected Image sync(PurritoRaw purritoRaw) {
-        try{
-            JSONObject payload = new JSONObject()
-                    .put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
-            IResponse iResponse = purritoRaw.newRequest()
-                    .useEndpoint(Endpoint.MSC_Quote)
-                    .getReturnType(Endpoint.ReturnType.RAW_IMAGE)
-                    .addTransmissionData(payload)
-                    .prepare()
-                    .execute();
-            if(iResponse instanceof ResponseError){
-                throw (ResponseError)iResponse;
-            }
-            return new Image(((ResponseData) iResponse).getBytePayload());
-        }catch (Exception e){
-            logger.error("Something went wrong getting the image data:", e);
-        }
-        return null;
-    }
+	@Override
+	protected Image sync(PurritoRaw purritoRaw){
+		try{
+			JSONObject payload = new JSONObject()
+				.put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
+			IResponse iResponse = purritoRaw.newRequest()
+				.useEndpoint(Endpoint.MSC_Quote)
+				.getReturnType(Endpoint.ReturnType.RAW_IMAGE)
+				.addTransmissionData(payload)
+				.prepare()
+				.execute();
+			if(iResponse instanceof ResponseError){
+				throw (ResponseError) iResponse;
+			}
+			return new Image(((ResponseData) iResponse).getBytePayload());
+		}
+		catch(Exception e){
+			logger.error("Something went wrong getting the image data:", e);
+		}
+		return null;
+	}
 
-    @Override
-    protected void async(PurritoRaw purritoRaw, Consumer<Image> onSuccess, Consumer<Exception> onError) {
-        try{
-            JSONObject payload = new JSONObject()
-                    .put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
-            purritoRaw.newRequest()
-                    .useEndpoint(Endpoint.MSC_Quote)
-                    .getReturnType(Endpoint.ReturnType.RAW_IMAGE)
-                    .addTransmissionData(payload)
-                    .prepare()
-                    .execute(success -> {
-                        onSuccess.accept(new Image(success.getBytePayload()));
-                    }, onError);
-        }catch (Exception e){
-            if(onError != null){
-                logger.debug("Something went wrong getting the image data:", e);
-                onError.accept(new ResponseError(e));
-            }else {
-                logger.error("Something went wrong getting the image data:", e);
-            }
-        }
-    }
+	@Override
+	protected void async(PurritoRaw purritoRaw, Consumer<Image> onSuccess, Consumer<Exception> onError){
+		try{
+			JSONObject payload = new JSONObject()
+				.put("avatar", avatarUrl).put("username", username).put("message", message).put("nameColor", nameColor).put("dateFormat", dateformat);
+			purritoRaw.newRequest()
+				.useEndpoint(Endpoint.MSC_Quote)
+				.getReturnType(Endpoint.ReturnType.RAW_IMAGE)
+				.addTransmissionData(payload)
+				.prepare()
+				.execute(success -> {
+					onSuccess.accept(new Image(success.getBytePayload()));
+				}, onError);
+		}
+		catch(Exception e){
+			if(onError != null){
+				logger.debug("Something went wrong getting the image data:", e);
+				onError.accept(new ResponseError(e));
+			}
+			else{
+				logger.error("Something went wrong getting the image data:", e);
+			}
+		}
+	}
+
 }

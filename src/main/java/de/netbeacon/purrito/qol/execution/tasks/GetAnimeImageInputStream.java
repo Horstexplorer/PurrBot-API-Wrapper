@@ -27,45 +27,49 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.function.Consumer;
 
-public class GetAnimeImageInputStream extends ExecutionTask<InputStream> {
+public class GetAnimeImageInputStream extends ExecutionTask<InputStream>{
 
-    private final ImageType imageType;
-    private final ContentType contentType;
+	private final ImageType imageType;
+	private final ContentType contentType;
 
-    public GetAnimeImageInputStream(ImageType imageType, ContentType contentType){
-        this.imageType = imageType;
-        this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
-    }
+	public GetAnimeImageInputStream(ImageType imageType, ContentType contentType){
+		this.imageType = imageType;
+		this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
+	}
 
-    @Override
-    protected InputStream sync(PurritoRaw purritoRaw) {
-        try{
-            ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
-            String url = executionStage.sync();
-            if(url == null){
-                return null;
-            }
-            return new URL(url).openStream();
-        }catch (Exception e){
-            logger.error("Something went wrong getting the image input stream:", e);
-        }
-        return null;
-    }
+	@Override
+	protected InputStream sync(PurritoRaw purritoRaw){
+		try{
+			ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
+			String url = executionStage.sync();
+			if(url == null){
+				return null;
+			}
+			return new URL(url).openStream();
+		}
+		catch(Exception e){
+			logger.error("Something went wrong getting the image input stream:", e);
+		}
+		return null;
+	}
 
-    @Override
-    protected void async(PurritoRaw purritoRaw, Consumer<InputStream> onSuccess, Consumer<Exception> onError) {
-        ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
-        executionStage.async((url) -> {
-            try{
-                onSuccess.accept(new URL(url).openStream());
-            }catch (Exception e){
-                if(onError != null){
-                    logger.debug("Something went wrong getting the image input stream:", e);
-                    onError.accept(new ResponseError(e));
-                }else{
-                    logger.error("Something went wrong getting the image input stream:", e);
-                }
-            }
-        }, onError);
-    }
+	@Override
+	protected void async(PurritoRaw purritoRaw, Consumer<InputStream> onSuccess, Consumer<Exception> onError){
+		ExecutionStage<String> executionStage = new ExecutionStage<>(purritoRaw, new GetAnimeImageUrl(imageType, contentType));
+		executionStage.async((url) -> {
+			try{
+				onSuccess.accept(new URL(url).openStream());
+			}
+			catch(Exception e){
+				if(onError != null){
+					logger.debug("Something went wrong getting the image input stream:", e);
+					onError.accept(new ResponseError(e));
+				}
+				else{
+					logger.error("Something went wrong getting the image input stream:", e);
+				}
+			}
+		}, onError);
+	}
+
 }

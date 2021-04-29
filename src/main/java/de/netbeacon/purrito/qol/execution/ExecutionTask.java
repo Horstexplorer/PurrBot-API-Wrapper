@@ -28,6 +28,7 @@ public abstract class ExecutionTask<O> {
 
     /**
      * Execute the task and wait for the result
+     *
      * @param purritoRaw purritoraw instance
      * @return the result object
      */
@@ -35,9 +36,10 @@ public abstract class ExecutionTask<O> {
 
     /**
      * Execute the task and call the consumers accordingly when something happened
+     *
      * @param purritoRaw purritoraw instance
-     * @param onSuccess returns the result object on success
-     * @param onError returns the exception if any occurs
+     * @param onSuccess  returns the result object on success
+     * @param onError    returns the exception if any occurs
      */
     protected abstract void async(PurritoRaw purritoRaw, Consumer<O> onSuccess, Consumer<Exception> onError);
 

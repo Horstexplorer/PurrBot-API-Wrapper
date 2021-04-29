@@ -33,7 +33,7 @@ public class GetStatusImage extends ExecutionTask<Image> {
     private final String status;
     private final boolean isMobile;
 
-    public GetStatusImage(String avatarUrl, String status, boolean isMobile){
+    public GetStatusImage(String avatarUrl, String status, boolean isMobile) {
         this.avatarUrl = avatarUrl;
         this.status = status;
         this.isMobile = isMobile;
@@ -41,7 +41,7 @@ public class GetStatusImage extends ExecutionTask<Image> {
 
     @Override
     protected Image sync(PurritoRaw purritoRaw) {
-        try{
+        try {
             JSONObject payload = new JSONObject()
                     .put("avatar", avatarUrl).put("status", status).put("mobile", isMobile);
             IResponse iResponse = purritoRaw.newRequest()
@@ -50,11 +50,11 @@ public class GetStatusImage extends ExecutionTask<Image> {
                     .addTransmissionData(payload)
                     .prepare()
                     .execute();
-            if(iResponse instanceof ResponseError){
-                throw (ResponseError)iResponse;
+            if (iResponse instanceof ResponseError) {
+                throw (ResponseError) iResponse;
             }
             return new Image(((ResponseData) iResponse).getBytePayload());
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("Something went wrong getting the image data:", e);
         }
         return null;
@@ -62,7 +62,7 @@ public class GetStatusImage extends ExecutionTask<Image> {
 
     @Override
     protected void async(PurritoRaw purritoRaw, Consumer<Image> onSuccess, Consumer<Exception> onError) {
-        try{
+        try {
             JSONObject payload = new JSONObject()
                     .put("avatar", avatarUrl).put("status", status).put("mobile", isMobile);
             purritoRaw.newRequest()
@@ -73,13 +73,14 @@ public class GetStatusImage extends ExecutionTask<Image> {
                     .execute(success -> {
                         onSuccess.accept(new Image(success.getBytePayload()));
                     }, onError);
-        }catch (Exception e){
-            if(onError != null){
+        } catch (Exception e) {
+            if (onError != null) {
                 logger.debug("Something went wrong getting the image data:", e);
                 onError.accept(new ResponseError(e));
-            }else {
+            } else {
                 logger.error("Something went wrong getting the image data:", e);
             }
         }
     }
+
 }

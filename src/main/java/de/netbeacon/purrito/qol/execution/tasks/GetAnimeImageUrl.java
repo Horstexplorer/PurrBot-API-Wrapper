@@ -27,70 +27,76 @@ import org.json.JSONObject;
 
 import java.util.function.Consumer;
 
-public class GetAnimeImageUrl extends ExecutionTask<String> {
+public class GetAnimeImageUrl extends ExecutionTask<String>{
 
-    private final ImageType imageType;
-    private final ContentType contentType;
+	private final ImageType imageType;
+	private final ContentType contentType;
 
-    public GetAnimeImageUrl(ImageType imageType, ContentType contentType){
-        this.imageType = imageType;
-        this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
-    }
+	public GetAnimeImageUrl(ImageType imageType, ContentType contentType){
+		this.imageType = imageType;
+		this.contentType = contentType.equals(ContentType.AVAILABLE) ? ContentType.findAvailable(imageType) : contentType;
+	}
 
-    @Override
-    protected String sync(PurritoRaw purritoRaw) {
-        try{
-            IResponse iResponse = purritoRaw.newRequest()
-                    .useEndpoint(imageType.getEndpoint())
-                    .getReturnType(contentType.getReturnTypes())
-                    .prepare()
-                    .execute();
-            if(iResponse instanceof ResponseError){
-                throw (ResponseError)iResponse;
-            }
-            JSONObject payload = ((ResponseData) iResponse).getAsJSONPayload();
-            if(payload.getBoolean("error")){
-                throw new ResponseError(payload.getString("message"));
-            }
-            return payload.getString("link");
-        }catch (Exception e){
-            logger.error("Something went wrong getting the image url:", e);
-        }
-        return null;
-    }
+	@Override
+	protected String sync(PurritoRaw purritoRaw){
+		try{
+			IResponse iResponse = purritoRaw.newRequest()
+				.useEndpoint(imageType.getEndpoint())
+				.getReturnType(contentType.getReturnTypes())
+				.prepare()
+				.execute();
+			if(iResponse instanceof ResponseError){
+				throw (ResponseError) iResponse;
+			}
+			JSONObject payload = ((ResponseData) iResponse).getAsJSONPayload();
+			if(payload.getBoolean("error")){
+				throw new ResponseError(payload.getString("message"));
+			}
+			return payload.getString("link");
+		}
+		catch(Exception e){
+			logger.error("Something went wrong getting the image url:", e);
+		}
+		return null;
+	}
 
-    @Override
-    protected void async(PurritoRaw purritoRaw, Consumer<String> onSuccess, Consumer<Exception> onError) {
-        try{
-            purritoRaw.newRequest()
-                    .useEndpoint(imageType.getEndpoint())
-                    .getReturnType(contentType.getReturnTypes())
-                    .prepare().execute((s) ->{
-                try{
-                    JSONObject payload = s.getAsJSONPayload();
-                    if(payload.getBoolean("error")){
-                        if(onError != null){
-                            logger.error("Something went wrong getting the image url: "+payload.get("message"));
-                            onError.accept(new ResponseError(payload.getString("message")));
-                        }
-                    }
-                    onSuccess.accept(payload.getString("link"));
-                }catch (Exception e){
-                    if(onError != null){
-                        logger.debug("Something went wrong getting the image url:", e);
-                        onError.accept(new ResponseError(e));
-                    }else{
-                        logger.error("Something went wrong getting the image url:", e);
-                    }
-                }
-            }, onError);
-        }catch (Exception e){
-            if(onError != null){
-                logger.debug("Something went wrong getting the image url:", e);
-                onError.accept(new ResponseError(e));
-            }else{
-                logger.error("Something went wrong getting the image url:", e);
-            }
-        }
-    }
+	@Override
+	protected void async(PurritoRaw purritoRaw, Consumer<String> onSuccess, Consumer<Exception> onError){
+		try{
+			purritoRaw.newRequest()
+				.useEndpoint(imageType.getEndpoint())
+				.getReturnType(contentType.getReturnTypes())
+				.prepare().execute((s) -> {
+				try{
+					JSONObject payload = s.getAsJSONPayload();
+					if(payload.getBoolean("error")){
+						if(onError != null){
+							logger.error("Something went wrong getting the image url: " + payload.get("message"));
+							onError.accept(new ResponseError(payload.getString("message")));
+						}
+					}
+					onSuccess.accept(payload.getString("link"));
+				}
+				catch(Exception e){
+					if(onError != null){
+						logger.debug("Something went wrong getting the image url:", e);
+						onError.accept(new ResponseError(e));
+					}
+					else{
+						logger.error("Something went wrong getting the image url:", e);
+					}
+				}
+			}, onError);
+		}
+		catch(Exception e){
+			if(onError != null){
+				logger.debug("Something went wrong getting the image url:", e);
+				onError.accept(new ResponseError(e));
+			}
+			else{
+				logger.error("Something went wrong getting the image url:", e);
+			}
+		}
+	}
+
 }

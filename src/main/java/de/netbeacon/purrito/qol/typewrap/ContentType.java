@@ -18,13 +18,17 @@ package de.netbeacon.purrito.qol.typewrap;
 
 import de.netbeacon.purrito.core.request.Endpoint;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 /**
  * Contains all supported content types
  */
 public enum ContentType {
         IMAGE(Endpoint.ReturnType.JSON_w_IMG),
         GIF(Endpoint.ReturnType.JSON_w_GIF),
-        AVAILABLE()
+        AVAILABLE(),
+        RANDOM()
     ;
 
     private final Endpoint.ReturnType returnType;
@@ -58,6 +62,27 @@ public enum ContentType {
             return ContentType.IMAGE;
         }else{
             return null;
+        }
+    }
+
+    /**
+     * Helper method
+     * @param imageType
+     * @return available content type of image; either gif or image
+     */
+    public static ContentType findRandom(ImageType imageType){
+        var types = imageType.getEndpoint().getReturnTypes().stream()
+                .filter(r -> r.equals(Endpoint.ReturnType.JSON_w_GIF) || r.equals(Endpoint.ReturnType.JSON_w_IMG))
+                .collect(Collectors.toList());
+        if(types.isEmpty()) return null;
+        Collections.shuffle(types);
+        switch (types.get(0)){
+            case JSON_w_GIF:
+                return ContentType.GIF;
+            case JSON_w_IMG:
+                return ContentType.IMAGE;
+            default:
+                return null;
         }
     }
 }

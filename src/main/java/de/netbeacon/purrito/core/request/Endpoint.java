@@ -79,6 +79,7 @@ public enum Endpoint{
 	private final JSONObject requiredData;
 	private final Request.Method requestMethod;
 	private final HashSet<ReturnType> returnTypes;
+
 	Endpoint(Request.Method method, String path, boolean isNsfw, JSONObject requiredData, ReturnType... returnTypes){
 		this.requestMethod = method;
 		this.path = path;

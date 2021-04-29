@@ -22,26 +22,25 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Consumer;
 
-public abstract class ExecutionTask<O>{
+public abstract class ExecutionTask<O> {
 
-	protected final Logger logger = LoggerFactory.getLogger(PurritoRaw.class);
+    protected final Logger logger = LoggerFactory.getLogger(PurritoRaw.class);
 
-	/**
-	 * Execute the task and wait for the result
-	 *
-	 * @param purritoRaw purritoraw instance
-	 *
-	 * @return the result object
-	 */
-	protected abstract O sync(PurritoRaw purritoRaw);
+    /**
+     * Execute the task and wait for the result
+     *
+     * @param purritoRaw purritoraw instance
+     * @return the result object
+     */
+    protected abstract O sync(PurritoRaw purritoRaw);
 
-	/**
-	 * Execute the task and call the consumers accordingly when something happened
-	 *
-	 * @param purritoRaw purritoraw instance
-	 * @param onSuccess  returns the result object on success
-	 * @param onError    returns the exception if any occurs
-	 */
-	protected abstract void async(PurritoRaw purritoRaw, Consumer<O> onSuccess, Consumer<Exception> onError);
+    /**
+     * Execute the task and call the consumers accordingly when something happened
+     *
+     * @param purritoRaw purritoraw instance
+     * @param onSuccess  returns the result object on success
+     * @param onError    returns the exception if any occurs
+     */
+    protected abstract void async(PurritoRaw purritoRaw, Consumer<O> onSuccess, Consumer<Exception> onError);
 
 }

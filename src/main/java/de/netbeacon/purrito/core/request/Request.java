@@ -45,6 +45,7 @@ public class Request{
 	private final Endpoint endpoint;
 	private final Endpoint.ReturnType returnType;
 	private final JSONObject transmissionData;
+
 	/**
 	 * Creates a new instance of this class
 	 *

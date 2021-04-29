@@ -19,45 +19,49 @@ package de.netbeacon.purrito.core.responses;
 /**
  * Used wherever things go wrong
  */
-public class ResponseError extends RuntimeException implements IResponse.Error {
+public class ResponseError extends RuntimeException implements IResponse.Error{
 
-    private final Throwable throwable;
+	private final Throwable throwable;
 
-    /**
-     * Creates a new instance of this class
-     * @param message error message
-     */
-    public ResponseError(String message){
-        super(message);
-        this.throwable = this;
-    }
+	/**
+	 * Creates a new instance of this class
+	 *
+	 * @param message error message
+	 */
+	public ResponseError(String message){
+		super(message);
+		this.throwable = this;
+	}
 
-    /**
-     * Creates a new instance of this class
-     * @param throwable throwable
-     */
-    public ResponseError(Throwable throwable){
-        super(throwable);
-        this.throwable = throwable;
-    }
+	/**
+	 * Creates a new instance of this class
+	 *
+	 * @param throwable throwable
+	 */
+	public ResponseError(Throwable throwable){
+		super(throwable);
+		this.throwable = throwable;
+	}
 
-    /**
-     * Creates a new instance of this class
-     * @param message error message
-     * @param throwable throwable
-     */
-    public ResponseError(String message, Throwable throwable){
-        super(message, throwable);
-        this.throwable = throwable;
-    }
+	/**
+	 * Creates a new instance of this class
+	 *
+	 * @param message   error message
+	 * @param throwable throwable
+	 */
+	public ResponseError(String message, Throwable throwable){
+		super(message, throwable);
+		this.throwable = throwable;
+	}
 
-    @Override
-    public Throwable getThrowable() {
-        return throwable;
-    }
+	@Override
+	public Throwable getThrowable(){
+		return throwable;
+	}
 
-    @Override
-    public Type getResponseType() {
-        return Type.ERROR;
-    }
+	@Override
+	public Type getResponseType(){
+		return Type.ERROR;
+	}
+
 }

@@ -25,39 +25,42 @@ import org.json.JSONObject;
  */
 public class ResponseData implements IResponse.Success{
 
-    private final Endpoint.ReturnType returnType;
-    private final byte[] bytePayload;
+	private final Endpoint.ReturnType returnType;
+	private final byte[] bytePayload;
 
-    /**
-     * Creates a new instance of this class
-     * @param returnType selected return type which should be included in the bytes
-     * @param bytePayload the payload
-     */
-    public ResponseData(Endpoint.ReturnType returnType, byte[] bytePayload){
-        this.returnType = returnType;
-        this.bytePayload = bytePayload;
-    }
+	/**
+	 * Creates a new instance of this class
+	 *
+	 * @param returnType  selected return type which should be included in the bytes
+	 * @param bytePayload the payload
+	 */
+	public ResponseData(Endpoint.ReturnType returnType, byte[] bytePayload){
+		this.returnType = returnType;
+		this.bytePayload = bytePayload;
+	}
 
-    /**
-     * Return type of the data included
-     * @return return type
-     */
-    public Endpoint.ReturnType getReturnType() {
-        return returnType;
-    }
+	/**
+	 * Return type of the data included
+	 *
+	 * @return return type
+	 */
+	public Endpoint.ReturnType getReturnType(){
+		return returnType;
+	}
 
-    @Override
-    public Type getResponseType() {
-        return Type.DATA;
-    }
+	@Override
+	public Type getResponseType(){
+		return Type.DATA;
+	}
 
-    @Override
-    public byte[] getBytePayload() {
-        return bytePayload;
-    }
+	@Override
+	public byte[] getBytePayload(){
+		return bytePayload;
+	}
 
-    @Override
-    public JSONObject getAsJSONPayload() {
-        return new JSONObject(new String(bytePayload));
-    }
+	@Override
+	public JSONObject getAsJSONPayload(){
+		return new JSONObject(new String(bytePayload));
+	}
+
 }

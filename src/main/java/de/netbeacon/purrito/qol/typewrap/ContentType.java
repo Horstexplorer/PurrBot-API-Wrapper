@@ -31,15 +31,15 @@ public enum ContentType {
         RANDOM()
     ;
 
-    private final Endpoint.ReturnType returnType;
+	private final Endpoint.ReturnType returnType;
 
-    ContentType(){
-        this.returnType = null;
-    }
+	ContentType(){
+		this.returnType = null;
+	}
 
-    ContentType(Endpoint.ReturnType returnType){
-        this.returnType = returnType;
-    }
+	ContentType(Endpoint.ReturnType returnType){
+		this.returnType = returnType;
+	}
 
     /**
      * Returns the return type equivalent

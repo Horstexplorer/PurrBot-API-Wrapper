@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'de.netbeacon.purrito'
-version '2.0.4'
+version '2.0.5'
 sourceCompatibility = 11
 
 repositories {

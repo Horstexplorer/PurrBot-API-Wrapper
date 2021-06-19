@@ -66,8 +66,8 @@ public enum Endpoint{
 	NSFW_Threesome_fff(Request.Method.GET, "/img/nsfw/threesome_fff/", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF),
 	NSFW_Threesome_ffm(Request.Method.GET, "/img/nsfw/threesome_ffm/", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF),
 	NSFW_Threesome_mmf(Request.Method.GET, "/img/nsfw/threesome_mmf/", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF),
-	NSFW_Yaoi(Request.Method.GET, "/img/nsfw/yaoi", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF),
-	NSFW_Yuri(Request.Method.GET, "/img/nsfw/yuri", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF);
+	NSFW_Yaoi(Request.Method.GET, "/img/nsfw/yaoi/", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF),
+	NSFW_Yuri(Request.Method.GET, "/img/nsfw/yuri/", true, null, ReturnType.JSON, ReturnType.JSON_w_GIF);
 
 
 	/**

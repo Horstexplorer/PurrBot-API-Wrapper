@@ -3,7 +3,7 @@
 ###### A simple wrapper for the anime image api provided by PurrBot
 
 [![Generic badge](https://img.shields.io/badge/Java-17-white.svg)]()
-[![Generic badge](https://img.shields.io/nexus/r/de.netbeacon.purrito/Purrito?color=white&label=Latest%20Version&nexusVersion=3&server=https%3A%2F%2Fcd.voigt.app%2F)]()
+[![Generic badge](https://img.shields.io/nexus/r/de.netbeacon.purrito/PurrBot-API-Wrapper?color=white&label=Latest%20Version&nexusVersion=3&server=https%3A%2F%2Fcd.voigt.app%2F)]()
 
 ## Installation
 
@@ -24,7 +24,7 @@ repositories {
 
 ```
 dependencies {
-    implementation group: 'de.netbeacon.purrito', name: 'Purrito', version: 'REPLACE WITH LATEST VERSION'
+    implementation group: 'de.netbeacon.purrito', name: 'PurrBot-API-Wrapper', version: 'REPLACE WITH LATEST VERSION'
 }
 ```
 
@@ -44,7 +44,7 @@ dependencies {
 <dependencies>
     <dependency>
         <groupId>de.netbeacon.purrito</groupId>
-        <artifactId>Purrito</artifactId>
+        <artifactId>PurrBot-API-Wrapper</artifactId>
         <version>REPLACE WITH LATEST VERSION</version>
     </dependency>
 </dependencies>

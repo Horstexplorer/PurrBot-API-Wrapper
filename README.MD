@@ -78,7 +78,7 @@ All requests can be triggered either asynchronously or synchronously
 // async
 retrieveAnimeImageUrl.queue(retrievedData->{
         // handle data
-        });
+});
 // sync
-        var retrievedData=retrieveAnimeImageUrl.execute()
+var retrievedData=retrieveAnimeImageUrl.execute()
 ```

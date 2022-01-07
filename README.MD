@@ -67,18 +67,21 @@ var purrito=new Purrito();
 The wrapper supports the API functionalities for loading random anime images, as well as the image generation for status and quote images.
 
 ```java
-var retrieveAnimeImageUrl=purrito.retrieveAnimeImageFor(imageContent,imageType);
-var retrieveQuoteImage=purrito.retrieveQuoteImageOf(avatarUrl, username, message, nameColor, dateformat);
-var retrieveStatusImage=retrieveStatusImageOf(avatarUrl, status, isMobile);
+var retrieveAnimeImageUrl = purrito.retrieveAnimeImageFor(imageContent,imageType);
+var retrieveQuoteImage = purrito.retrieveQuoteImageOf(avatarUrl, username, message, nameColor, dateformat);
+var retrieveStatusImage = retrieveStatusImageOf(avatarUrl, status, isMobile);
 ```
 
-All requests can be triggered either asynchronously or synchronously
+All requests can be triggered either asynchronous or synchronously
 
 ```java
 // async
 retrieveAnimeImageUrl.queue(retrievedData->{
-        // handle data
+    // <handle data here>
 });
+```
+```java
 // sync
-var retrievedData=retrieveAnimeImageUrl.execute()
+var retrievedData = retrieveAnimeImageUrl.execute()
+// <handle data here>
 ```

@@ -57,3 +57,28 @@ dependencies {
 [PurrBot - API](https://docs.purrbot.site)
 
 ## Usage
+
+All requests are generated via the wrapper instance which can be created simply like this and should be reused for multiple requests
+
+```java
+var purrito=new Purrito();
+```
+
+The wrapper supports the API functionalities for loading random anime images, as well as the image generation for status and quote images.
+
+```java
+var retrieveAnimeImageUrl=purrito.retrieveAnimeImageFor(imageContent,imageType);
+        var retrieveQuoteImage=purrito.retrieveQuoteImageOf(avatarUrl,username,message,nameColor,dateformat);
+        var retrieveStatusImage=retrieveStatusImageOf(avatarUrl,status,isMobile);
+```
+
+All requests can be triggered either asynchronously or synchronously
+
+```java
+// async
+retrieveAnimeImageUrl.queue(retrievedData->{
+        // handle data
+        });
+// sync
+        var retrievedData=retrieveAnimeImageUrl.execute()
+```

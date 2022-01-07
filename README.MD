@@ -1,86 +1,59 @@
 # PurrBot API Wrapper
-#### A simple wrapper for the anime image api provided by PurrBot
 
-## Table of contents
-- Download  
-- Links  
-- Usage
-  - Simplified (Default)
-  - Raw
+###### A simple wrapper for the anime image api provided by PurrBot
 
-## Download the latest version here
-Get it from Nexus  
+[![Generic badge](https://img.shields.io/badge/Java-17-white.svg)]()
+[![Generic badge](https://img.shields.io/nexus/r/de.netbeacon.purrito/Purrito?color=white&label=Latest%20Version&nexusVersion=3&server=https%3A%2F%2Fcd.voigt.app%2F)]()
+
+## Installation
+
+Grab the latest version from our [Nexus-Proxy](https://nexus.hypercdn.de/) using Gradle or Maven.  
+⚠️Be aware that this instance acts as proxy for load distribution.  
+⚠️Artifacts might not be listed till requested and the initial load might be very slow.
+
+### Gradle
+
 ```
-Gradle:
-maven {
-  url 'https://nexus.hypercdn.de/repository/hypercdn-maven'
+repositories {
+    maven {
+        name 'maven-hypercdn'
+        url 'https://nexus.hypercdn.de/repository/maven-hypercdn'
+    }
 }
-
-implementation group: 'de.netbeacon.purrito', name: 'PurrBot-API-Wrapper', version: '#.#.#'
-
-
-Maven:
-<repository>
-  <url>https://nexus.hypercdn.de/repository/hypercdn-maven</url>
-</repository>
-
-<dependency>
-  <groupId>de.netbeacon.purrito</groupId>
-  <artifactId>PurrBot-API-Wrapper</artifactId>
-  <version>#.#.#</version>
-</dependency>
 ```
-Or from our CI  
-[View all](https://ci.netbeacon.de/viewType.html?buildTypeId=Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper&tab=buildTypeStatusDiv) /
-[Direct download](https://ci.netbeacon.de/repository/download/Netbeacon_Miscellaneous_PurritoPurrBotApiWrapper/latest.lastSuccessful/PurrBot-API-Wrapper_latest.jar)  
-Or here from GitHub
+
+```
+dependencies {
+    implementation group: 'de.netbeacon.purrito', name: 'Purrito', version: 'REPLACE WITH LATEST VERSION'
+}
+```
+
+### Maven
+
+```
+<repositories>
+    <repository>
+        <id>maven-hypercdn</id>
+        <name>maven-hypercdn</name>
+        <url>https://nexus.hypercdn.de/repository/maven-hypercdn</url>
+    </repository>
+</repositories>
+```
+
+```
+<dependencies>
+    <dependency>
+        <groupId>de.netbeacon.purrito</groupId>
+        <artifactId>Purrito</artifactId>
+        <version>REPLACE WITH LATEST VERSION</version>
+    </dependency>
+</dependencies>
+
+```
 
 ## Links
+
 [PurrBot](https://purrbot.site)  
 [PurrBot - API](https://docs.purrbot.site)
 
 ## Usage
-This wrapper provides two ways of interacting with the api - an simplified one and a more raw one for when you want a maximum of customisability.  
-A full description of what is possible can be accessed through the javadocs.  
-
-### Simplified (Default)
-Lets start with creating a new client to interact with the api. The client is intended to be reused for all of your requests but if you see the need to have multiple instance of it, that works aswell.
-```java
-Purrito purrito = new Purrito();
-```
-Now there are various things you can do to interact with the api - all of which will return an execution stage object
-In this example we get the execution stage returning us an image object from the api data.
-The imageType will be what type of image you like to receive starting with if it should be SFW or NSFW, the contentType will be what type of image you want (gif/image).
-Keep in mind that not all image types support all content types.
-```
-ExecutionStage<Image> executionStage = purrito.getAnimeImageOf(imageType, contentType);
-// example
-ExecutionStage<Image> executionStage = purrito.getAnimeImageOf(ImageType.SFW.HUG, ContentType.GIF);
-```
-Now there are two ways to receive the image - a blocking and a non-blocking (preferred) way.
-For our example above this could look like this:
-```java
-// blocking
-Image image = executionStage.sync(); // will return null if something went wrong and logs an exception
-// non blocking
-executionStage.async((image) -> { // do something with the image here }); // will call the consumer on success and log an exception if things went wrong
-executionStage.async((image) -> { // do something with the image here }, (error) -> { // do something with the error here}); // will call the first consumer on success and the second one with the exception if things went wrong
-```
-
-### Raw
-As the simplified version is intended to be easily used everywhere it might not contain all features you like to work with.
-Therfore you can use the more raw interaction with the api.
-A short example below:
-```java
-PurritoRaw purritoRaw = new PurritoRaw();
-Request request = purritoRaw.newRequest()
-                            .useEndpoint(endpoint)
-                            .getReturnType(returnType)
-                            .addTransmissionData(jsonPayload)
-                            .prepare();
-// blocking
-IResponse response = request.execute(); // requires additional checks for the iResponse if things went right
-// non blocking
-request.execute(iResponse -> , error ->); // requires additional checks or the iResponse if things went right
-
-```

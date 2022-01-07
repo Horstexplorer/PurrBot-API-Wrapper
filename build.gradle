@@ -1,24 +1,33 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'de.netbeacon.purrito'
-version '2.0.5'
-sourceCompatibility = 11
+version '3.0.0.' + System.getenv("BUILD_NUMBER")
+sourceCompatibility = 17
+targetCompatibility = 17
 
 repositories {
+    maven {
+        name 'maven-hypercdn'
+        url 'https://nexus.hypercdn.de/repository/maven-hypercdn'
+    }
     mavenCentral()
 }
 
 dependencies {
+
+    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.3.16'
+
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.1'
-    // https://mvnrepository.com/artifact/org.json/json
-    implementation group: 'org.json', name: 'json', version: '20210307'
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
-    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'hours'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'hours'
 }
 
 shadowJar {
@@ -29,19 +38,19 @@ publishing {
     repositories {
         maven {
             credentials {
-                username System.getenv('nexus_hypercdn_user')
-                password System.getenv('nexus_hypercdn_password')
+                username findProperty("nexusu") as String
+                password findProperty("nexusp") as String
             }
-            url "https://nexus.hypercdn.de/repository/hypercdn-maven/"
+            url "https://cd.voigt.app/repository/maven-voigt/"
         }
     }
     publications {
         maven(MavenPublication) {
             artifact(tasks["shadowJar"])
             pom {
-                name = 'PurrBot API Wrapper'
-                description = 'A simple wrapper for the anime image api provided by PurrBot'
-                url = 'https://github.com/Horstexplorer/PurrBot-API-Wrapper'
+                name = 'Commons'
+                description = ''
+                url = 'https://github.com/HyperCDN/Commons'
 
                 licenses {
                     license {
@@ -49,17 +58,10 @@ publishing {
                         url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
-                developers {
-                    developer {
-                        id = 'horstexplorer'
-                        name = 'horstexplorer'
-                        email = 'null@null.null'
-                    }
-                }
                 scm {
-                    connection = 'scm:git:git://github.com/Horstexplorer/PurrBot-API-Wrapper'
-                    developerConnection = 'scm:git:ssh:git@github.com:Horstexplorer/PurrBot-API-Wrapper'
-                    url = 'https://github.com/Horstexplorer/PurrBot-API-Wrapper'
+                    connection = 'scm:git:git://github.com/HyperCDN/Commons'
+                    developerConnection = 'scm:git:ssh:git@github.com:HyperCDN/Commons'
+                    url = 'https://github.com/HyperCDN/Commons'
                 }
             }
         }

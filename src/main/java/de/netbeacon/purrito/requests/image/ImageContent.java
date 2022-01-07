@@ -4,12 +4,18 @@ import de.netbeacon.purrito.requests.endpoints.AnimeImageEndpoints;
 
 import java.util.Random;
 
+/**
+ * Represents the content of an image
+ */
 public interface ImageContent{
 
 	AnimeImageEndpoints getEndpoint();
 
 	AnimeImageEndpoints[] getEndpoints();
 
+	/**
+	 * Image contents which are safe for work
+	 */
 	enum SFW implements ImageContent{
 
 		BACKGROUND(AnimeImageEndpoints.SFW_Background),
@@ -83,6 +89,9 @@ public interface ImageContent{
 		}
 	}
 
+	/**
+	 * Image contents which are not safe for work
+	 */
 	enum NSFW implements ImageContent{
 		ANAL(AnimeImageEndpoints.NSFW_Anal),
 		BLOWJOB(AnimeImageEndpoints.NSFW_Blowjob),

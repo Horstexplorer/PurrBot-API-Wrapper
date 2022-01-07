@@ -68,8 +68,8 @@ The wrapper supports the API functionalities for loading random anime images, as
 
 ```java
 var retrieveAnimeImageUrl=purrito.retrieveAnimeImageFor(imageContent,imageType);
-        var retrieveQuoteImage=purrito.retrieveQuoteImageOf(avatarUrl,username,message,nameColor,dateformat);
-        var retrieveStatusImage=retrieveStatusImageOf(avatarUrl,status,isMobile);
+var retrieveQuoteImage=purrito.retrieveQuoteImageOf(avatarUrl, username, message, nameColor, dateformat);
+var retrieveStatusImage=retrieveStatusImageOf(avatarUrl, status, isMobile);
 ```
 
 All requests can be triggered either asynchronously or synchronously

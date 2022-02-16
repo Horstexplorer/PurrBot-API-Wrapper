@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
 
-    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.3.17'
+    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.4.29'
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'

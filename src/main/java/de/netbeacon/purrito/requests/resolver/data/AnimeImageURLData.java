@@ -1,6 +1,6 @@
 package de.netbeacon.purrito.requests.resolver.data;
 
-import de.hypercdn.commons.imp.executionaction.SupplierExecutionAction;
+import de.hypercdn.commons.imp.execution.action.SupplierExecutionAction;
 import de.netbeacon.purrito.requests.resolver.DataResolver;
 import de.netbeacon.purrito.requests.resolver.ResolvableData;
 import de.netbeacon.purrito.requests.resolver.request.ImageFetchRequest;

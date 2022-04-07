@@ -19,10 +19,17 @@ repositories {
 
 dependencies {
 
-    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.3.17'
+    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.40'
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
+
+    jar {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        from {
+            configurations.compileClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+        }
+    }
 }
 
 configurations.all {
@@ -46,7 +53,8 @@ publishing {
     }
     publications {
         maven(MavenPublication) {
-            artifact(tasks["shadowJar"])
+            //artifact(tasks["shadowJar"])
+            from components.java
             pom {
                 name = 'Purrito'
                 description = ''

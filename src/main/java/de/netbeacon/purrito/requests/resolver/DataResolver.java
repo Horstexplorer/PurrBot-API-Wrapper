@@ -1,7 +1,7 @@
 package de.netbeacon.purrito.requests.resolver;
 
-import de.hypercdn.commons.imp.executionaction.ExecutionException;
-import de.hypercdn.commons.imp.executionaction.SupplierExecutionAction;
+import de.hypercdn.commons.imp.execution.action.ExecutionException;
+import de.hypercdn.commons.imp.execution.action.SupplierExecutionAction;
 import okhttp3.OkHttpClient;
 
 import java.util.concurrent.Executor;

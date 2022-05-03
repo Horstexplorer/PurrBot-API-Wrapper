@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
 
-    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.40'
+    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.44'
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
@@ -48,7 +48,7 @@ publishing {
                 username findProperty("nexusu") as String
                 password findProperty("nexusp") as String
             }
-            url "https://cd.voigt.app/repository/maven-voigt/"
+            url findProperty("nexusr") as String
         }
     }
     publications {

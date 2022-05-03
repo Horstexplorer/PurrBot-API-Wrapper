@@ -13,7 +13,7 @@ Grab the latest version from our [Nexus-Proxy](https://nexus.hypercdn.de/) using
 
 ### Gradle
 
-```
+```groovy
 repositories {
     maven {
         name 'maven-hypercdn'
@@ -22,7 +22,7 @@ repositories {
 }
 ```
 
-```
+```groovy
 dependencies {
     implementation group: 'de.netbeacon.purrito', name: 'PurrBot-API-Wrapper', version: 'REPLACE WITH LATEST VERSION'
 }
@@ -30,7 +30,7 @@ dependencies {
 
 ### Maven
 
-```
+```xml
 <repositories>
     <repository>
         <id>maven-hypercdn</id>
@@ -40,7 +40,7 @@ dependencies {
 </repositories>
 ```
 
-```
+```xml
 <dependencies>
     <dependency>
         <groupId>de.netbeacon.purrito</groupId>

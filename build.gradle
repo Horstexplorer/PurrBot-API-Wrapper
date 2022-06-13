@@ -22,7 +22,7 @@ dependencies {
     implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.44'
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0'
 
     jar {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE

@@ -5,9 +5,10 @@ plugins {
 }
 
 group 'de.netbeacon.purrito'
-version '3.0.0.' + System.getenv("BUILD_NUMBER")
+version '3.0.0.' + System.getenv("BUILD_NUMBER") + System.getenv("BUILD_APPENDIX")
 sourceCompatibility = 17
 targetCompatibility = 17
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     maven {
@@ -19,10 +20,14 @@ repositories {
 
 dependencies {
 
-    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.44'
+    implementation group: 'de.hypercdn.commons', name: 'Commons', version: '1.0.6.75'
 
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.0.0-alpha.10'
+
+    // https://mvnrepository.com/artifact/org.mongodb/bson
+    implementation group: 'org.mongodb', name: 'bson', version: '4.7.0'
+
 
     jar {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -48,7 +53,7 @@ publishing {
                 username findProperty("nexusu") as String
                 password findProperty("nexusp") as String
             }
-            url findProperty("nexusr") as String
+            url version.endsWith('SNAPSHOT') ? findProperty("nexussr") as String : findProperty("nexusr") as String
         }
     }
     publications {
